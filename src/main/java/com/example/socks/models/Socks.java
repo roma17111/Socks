@@ -1,7 +1,4 @@
 package com.example.socks.models;
-
-
-import javax.naming.OperationNotSupportedException;
 import java.util.Objects;
 
 public class Socks {
