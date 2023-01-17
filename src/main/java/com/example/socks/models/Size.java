@@ -11,4 +11,8 @@ public enum Size {
     Size(Integer size) {
         this.size = size;
     }
+
+    public Integer getSize() {
+        return size;
+    }
 }

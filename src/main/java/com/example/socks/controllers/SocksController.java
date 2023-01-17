@@ -35,6 +35,13 @@ public class SocksController {
     }
 
     @GetMapping("/all")
+    @Operation(description = "Посмотреть на складе количество партий носков")
+    @ApiResponse(responseCode = "200",
+            description = "Список партий носков на складе")
+    @ApiResponse(responseCode = "400",
+            description = "параметры запроса отсутствуют или имеют некорректный формат;")
+    @ApiResponse(responseCode = "500",
+            description = "произошла ошибка, не зависящая от вызывающей стороны.")
     public ResponseEntity getAllSocks() {
         return ResponseEntity.ok(socksService.getAllSocks().toString());
     }

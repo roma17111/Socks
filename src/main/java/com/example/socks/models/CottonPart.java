@@ -11,4 +11,8 @@ public enum CottonPart {
     CottonPart(Integer percent) {
         this.percent = percent;
     }
+
+    public Integer getPercent() {
+        return percent;
+    }
 }
