@@ -67,8 +67,11 @@ public class SocksServiceImpl implements SocksService {
             if (i > socks.get(number).getQuantity())
                 return false;
             socks.get(number).setQuantity(socks.get(number).getQuantity()-i);
-            saveFile();
-            return true;
+            if (socks.get(number).getQuantity() == 0) {
+                socks.remove(number);
+                saveFile();
+                return true;
+            }
         }
         return false;
     }
