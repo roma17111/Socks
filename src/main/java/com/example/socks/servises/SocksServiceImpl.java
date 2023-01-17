@@ -10,7 +10,6 @@ import javax.annotation.PostConstruct;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 @Service
 public class SocksServiceImpl implements SocksService {
@@ -57,6 +56,17 @@ public class SocksServiceImpl implements SocksService {
     public boolean deletePartSocks(Long number) {
         if (socks.containsKey(number)) {
             socks.remove(number);
+            saveFile();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean putSocks(Long number, Integer i) {
+        if (socks.containsKey(number)) {
+            if (i >= socks.get(number).getQuantity())
+                return false;
+            socks.get(number).setQuantity(socks.get(number).getQuantity()-i);
             saveFile();
             return true;
         }

@@ -57,4 +57,16 @@ public class SocksController {
     public ResponseEntity delete(@RequestParam Long num) {
         return ResponseEntity.ok(socksService.deletePartSocks(num));
     }
+
+    @PutMapping("/take")
+    @Operation(description = "Забрать носки со склада")
+    @ApiResponse(responseCode = "200",
+            description = "Вы забрали носки")
+    @ApiResponse(responseCode = "400",
+            description = "параметры запроса отсутствуют или имеют некорректный формат;")
+    @ApiResponse(responseCode = "500",
+            description = "произошла ошибка, не зависящая от вызывающей стороны.")
+    public ResponseEntity takeSocks(@RequestParam Long numberParty, Integer takeSocks) {
+        return ResponseEntity.ok(socksService.putSocks(numberParty, takeSocks));
+    }
 }

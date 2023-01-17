@@ -14,4 +14,6 @@ public interface SocksService {
 
     @Nullable
     boolean deletePartSocks(Long number);
+
+    boolean putSocks(Long number, Integer i);
 }
