@@ -1,6 +1,7 @@
 package com.example.socks.servises;
 
 import com.example.socks.models.Socks;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -10,4 +11,7 @@ public interface SocksService {
     Socks addSocks(Socks sock);
 
     Map<Long, Socks> getAllSocks();
+
+    @Nullable
+    boolean deletePartSocks(Long number);
 }

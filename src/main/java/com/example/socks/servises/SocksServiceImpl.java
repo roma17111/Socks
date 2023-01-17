@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class SocksServiceImpl implements SocksService {
@@ -39,6 +40,7 @@ public class SocksServiceImpl implements SocksService {
             saveFile();
             return sock;
         }
+
         number++;
         addSocks(sock);
         return sock;
@@ -48,6 +50,17 @@ public class SocksServiceImpl implements SocksService {
     @Nullable
     public Map<Long, Socks> getAllSocks() {
         return socks;
+    }
+
+    @Override
+    @Nullable
+    public boolean deletePartSocks(Long number) {
+        if (socks.containsKey(number)) {
+            socks.remove(number);
+            saveFile();
+            return true;
+        }
+        return false;
     }
 
     public void saveFile() {
@@ -73,4 +86,6 @@ public class SocksServiceImpl implements SocksService {
             e.printStackTrace();
         }
     }
+
+
 }

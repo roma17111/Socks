@@ -18,8 +18,6 @@ public class Socks {
     private  CottonPart cottonPart;
     private Integer quantity;
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
