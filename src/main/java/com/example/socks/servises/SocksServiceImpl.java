@@ -64,7 +64,7 @@ public class SocksServiceImpl implements SocksService {
     @Override
     public boolean putSocks(Long number, Integer i) {
         if (socks.containsKey(number)) {
-            if (i >= socks.get(number).getQuantity())
+            if (i > socks.get(number).getQuantity())
                 return false;
             socks.get(number).setQuantity(socks.get(number).getQuantity()-i);
             saveFile();
