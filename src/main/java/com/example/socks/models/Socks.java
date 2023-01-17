@@ -1,48 +1,24 @@
 package com.example.socks.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
 import java.util.Objects;
 
+@Data
+@AllArgsConstructor
+@NonNull
+@NoArgsConstructor
 public class Socks {
 
-    private final Color color;
-    private final Size size;
-    private final CottonPart cottonPart;
+    private  Color color;
+    private  Size size;
+    private  CottonPart cottonPart;
     private Integer quantity;
 
-    public Socks(Color color, Size size, CottonPart cottonPart, Integer quantity) {
-        this.color = color;
-        this.size = size;
-        this.cottonPart = cottonPart;
-        if (quantity == null || quantity < 0 || quantity > 100_000) {
-            throw new IllegalArgumentException();
-        }else {
-            this.quantity = quantity;
-        }
-    }
 
-
-    public Color getColor() {
-        return color;
-    }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public CottonPart getCottonPart() {
-        return cottonPart;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        if (quantity > getQuantity()) {
-            throw new IllegalArgumentException();
-        }else {
-            this.quantity = quantity;
-        }
-    }
 
     @Override
     public boolean equals(Object o) {
