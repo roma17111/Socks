@@ -4,11 +4,13 @@ import com.example.socks.models.Socks;
 import com.example.socks.servises.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/socks")
+@Tag(name = "Склад носков", description = "Операции со складом")
 public class SocksController {
 
     private final SocksService socksService;
