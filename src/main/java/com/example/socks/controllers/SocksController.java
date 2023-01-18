@@ -1,5 +1,8 @@
 package com.example.socks.controllers;
 
+import com.example.socks.models.Color;
+import com.example.socks.models.CottonPart;
+import com.example.socks.models.Size;
 import com.example.socks.models.Socks;
 import com.example.socks.services.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +39,7 @@ public class SocksController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/get")
     @Operation(description = "Посмотреть на складе количество партий носков")
     @ApiResponse(responseCode = "200",
             description = "Список партий носков на складе")
@@ -44,11 +47,13 @@ public class SocksController {
             description = "параметры запроса отсутствуют или имеют некорректный формат;")
     @ApiResponse(responseCode = "500",
             description = "произошла ошибка, не зависящая от вызывающей стороны.")
-    public ResponseEntity getAllSocks() {
-        return ResponseEntity.ok(socksService.getAllSocks().toString());
+    public ResponseEntity getAllSocks(@RequestParam Color color,
+                                      @RequestParam Size size,
+                                      @RequestParam CottonPart cottonPart) {
+        return ResponseEntity.ok(socksService.getSocks(color,size,cottonPart).toString());
     }
 
-    @DeleteMapping("/delete{num}")
+    @DeleteMapping("/delete")
     @Operation(description = "Выбраковка товара")
     @ApiResponse(responseCode = "200",
             description = "Товары списаны")
@@ -56,8 +61,8 @@ public class SocksController {
             description = "параметры запроса отсутствуют или имеют некорректный формат;")
     @ApiResponse(responseCode = "500",
             description = "произошла ошибка, не зависящая от вызывающей стороны.")
-    public ResponseEntity delete(@RequestParam Long num) {
-        return ResponseEntity.ok(socksService.deletePartSocks(num));
+    public ResponseEntity delete(@RequestBody Socks sock) {
+        return ResponseEntity.ok(socksService.deleteSocks(sock));
     }
 
     @PutMapping("/take")
@@ -68,7 +73,7 @@ public class SocksController {
             description = "параметры запроса отсутствуют или имеют некорректный формат;")
     @ApiResponse(responseCode = "500",
             description = "произошла ошибка, не зависящая от вызывающей стороны.")
-    public ResponseEntity takeSocks(@RequestParam Long numberParty, Integer takeSocks) {
-        return ResponseEntity.ok(socksService.putSocks(numberParty, takeSocks));
+    public ResponseEntity takeSocks(@RequestParam Socks sock, Integer takeSocks) {
+        return ResponseEntity.ok(socksService.putSocks(sock, takeSocks));
     }
 }

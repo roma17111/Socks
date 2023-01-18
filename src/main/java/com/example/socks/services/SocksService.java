@@ -15,8 +15,6 @@ public interface SocksService {
     @Nullable
     Socks addSocks(Socks sock);
 
-    Socks getSocks();
-
     Integer getSocks(Color color, Size size, CottonPart cottonPart);
 
     boolean putSocks(Socks sock, Integer i);

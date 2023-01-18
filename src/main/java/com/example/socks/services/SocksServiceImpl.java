@@ -39,6 +39,7 @@ public class SocksServiceImpl implements SocksService {
     @Nullable
     public Socks addSocks(Socks sock) {
         socks.add(sock);
+        saveFile();
         return sock;
     }
 
@@ -71,6 +72,7 @@ public class SocksServiceImpl implements SocksService {
     }
     @Override
     public boolean deleteSocks(Socks sock) {
+        saveFile();
         return socks.remove(sock);
     }
 
