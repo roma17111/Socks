@@ -6,7 +6,7 @@ public enum CottonPart {
     C3(60),
     C4(80),
     C5(100);
-    Integer percent;
+   private Integer percent;
 
     CottonPart(Integer percent) {
         this.percent = percent;

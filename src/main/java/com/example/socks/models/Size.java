@@ -6,7 +6,7 @@ public enum Size {
     L(29),
     XL(31);
 
-    Integer size;
+   private Integer size;
 
     Size(Integer size) {
         this.size = size;

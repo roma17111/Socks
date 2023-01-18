@@ -1,4 +1,4 @@
-package com.example.socks.servises;
+package com.example.socks.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

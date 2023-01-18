@@ -7,7 +7,7 @@ public enum Color {
     RAD("Красный"),
     YELLOW("Жёлтый");
 
-    String color;
+   private String color;
 
     Color(String color) {
         this.color = color;

@@ -1,7 +1,7 @@
 package com.example.socks.controllers;
 
 import com.example.socks.models.Socks;
-import com.example.socks.servises.SocksService;
+import com.example.socks.services.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/socks")
+@RequestMapping("/api/socks")
 @Tag(name = "Склад носков", description = "Операции со складом")
 public class SocksController {
 
@@ -49,7 +49,7 @@ public class SocksController {
     }
 
     @DeleteMapping("/delete{num}")
-    @Operation(description = "Выбрвковка товара")
+    @Operation(description = "Выбраковка товара")
     @ApiResponse(responseCode = "200",
             description = "Товары списаны")
     @ApiResponse(responseCode = "400",

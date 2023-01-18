@@ -1,4 +1,4 @@
-package com.example.socks.servises;
+package com.example.socks.services;
 
 public interface FileService {
 
