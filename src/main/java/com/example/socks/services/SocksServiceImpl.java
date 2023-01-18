@@ -57,19 +57,26 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public boolean putSocks(Socks sock, Integer i) {
-        if (socks.contains(sock)) {
-            if (i > sock.getQuantity())
-                return false;
-            sock.setQuantity(sock.getQuantity() - i);
-            if (sock.getQuantity() == 0) {
-                socks.remove(sock);
-                saveFile();
-                return true;
+    public boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i) {
+        for (Socks sock : socks) {
+            if (color == sock.getColor() &&
+                    size == sock.getSize() &&
+                    cottonPart == sock.getCottonPart()) {
+                int a = sock.getQuantity();
+                if (i > a){
+                    return false;
+                }
+                sock.setQuantity(sock.getQuantity() - i);
+                if (sock.getQuantity() == 0) {
+                    socks.remove(sock);
+                    saveFile();
+                    return true;
+                }
             }
         }
-        return false;
+        return true;
     }
+
     @Override
     public boolean deleteSocks(Socks sock) {
         saveFile();

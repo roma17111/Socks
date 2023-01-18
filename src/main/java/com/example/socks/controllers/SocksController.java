@@ -73,7 +73,10 @@ public class SocksController {
             description = "параметры запроса отсутствуют или имеют некорректный формат;")
     @ApiResponse(responseCode = "500",
             description = "произошла ошибка, не зависящая от вызывающей стороны.")
-    public ResponseEntity takeSocks(@RequestParam Socks sock, Integer takeSocks) {
-        return ResponseEntity.ok(socksService.putSocks(sock, takeSocks));
+    public ResponseEntity takeSocks(@RequestParam Color color,
+                                    @RequestParam Size size,
+                                    @RequestParam CottonPart cottonPart,
+                                    @RequestParam Integer integer) {
+        return ResponseEntity.ok(socksService.putSocks(color, size, cottonPart, integer));
     }
 }

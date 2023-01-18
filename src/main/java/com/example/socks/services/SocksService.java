@@ -17,7 +17,8 @@ public interface SocksService {
 
     Integer getSocks(Color color, Size size, CottonPart cottonPart);
 
-    boolean putSocks(Socks sock, Integer i);
+
+    boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i);
 
     boolean deleteSocks(Socks sock);
 }
