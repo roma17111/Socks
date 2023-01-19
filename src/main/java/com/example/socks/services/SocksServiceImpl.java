@@ -104,6 +104,11 @@ public class SocksServiceImpl implements SocksService {
             saveFile();
             return true;
         }
+        if (sock.getQuantity() == 0) {
+            socks.remove(sock);
+            saveFile();
+            return true;
+        }
         return false;
     }
 
