@@ -39,6 +39,9 @@ public class SocksServiceImpl implements SocksService {
     @Nullable
     public Socks addSocks(Socks sock) {
         socks.add(sock);
+        if (socks.contains(sock)) {
+            addSock(sock.getQuantity());
+        }
         saveFile();
         return sock;
     }
@@ -47,9 +50,9 @@ public class SocksServiceImpl implements SocksService {
     public Integer getSocks(Color color, Size size, CottonPart cottonPart) {
         Integer i = 0;
         for (Socks sock : socks) {
-            if (color == sock.getColor() &&
-                    size == sock.getSize() &&
-                    cottonPart == sock.getCottonPart()) {
+            if (color.equals(sock.getColor()) &&
+                    size.equals(sock.getSize())&&
+                    cottonPart.equals(sock.getCottonPart())) {
                 i = sock.getQuantity();
             }
         }
@@ -59,9 +62,9 @@ public class SocksServiceImpl implements SocksService {
     @Override
     public boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i) {
         for (Socks sock : socks) {
-            if (color == sock.getColor() &&
-                    size == sock.getSize() &&
-                    cottonPart == sock.getCottonPart()) {
+            if (color.equals(sock.getColor())  &&
+                    size.equals(sock.getSize()) &&
+                    cottonPart.equals(sock.getCottonPart())) {
                 int a = sock.getQuantity();
                 if (i > a){
                     return false;
@@ -75,6 +78,13 @@ public class SocksServiceImpl implements SocksService {
             }
         }
         return true;
+    }
+
+    public Integer addSock(Integer i) {
+        for (Socks sock : socks) {
+            sock.setQuantity(sock.getQuantity()+ i);
+        }
+        return i;
     }
 
     @Override
