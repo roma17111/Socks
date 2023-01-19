@@ -20,7 +20,7 @@ public class SocksServiceImpl implements SocksService {
     private static Set<Socks> socks = new HashSet<>();
 
     private final FileService fileService;
-    private static Long number = 1L;
+
 
     public SocksServiceImpl(FileService fileService) {
         this.fileService = fileService;
@@ -77,6 +77,7 @@ public class SocksServiceImpl implements SocksService {
                 }
             }
         }
+        saveFile();
         return true;
     }
 
@@ -103,7 +104,6 @@ public class SocksServiceImpl implements SocksService {
     }
 
     private void readToFile() {
-
         try {
             String json = fileService.readFileSocks();
             socks = new ObjectMapper().readValue(json, new TypeReference<>() {
