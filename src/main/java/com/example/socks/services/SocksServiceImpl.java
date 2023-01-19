@@ -82,6 +82,9 @@ public class SocksServiceImpl implements SocksService {
 
     private Integer addSock(Integer i) {
         for (Socks sock : socks) {
+            if (i <= 0) {
+                i = Math.abs(i);
+            }
             sock.setQuantity(sock.getQuantity()+ i);
         }
         return i;
@@ -89,6 +92,9 @@ public class SocksServiceImpl implements SocksService {
 
     private Integer deleteSock(Integer i) {
         for (Socks sock : socks) {
+            if (i < 0) {
+                i = Math.abs(i);
+            }
             if (i > sock.getQuantity()) {
                 i = sock.getQuantity();
             }
