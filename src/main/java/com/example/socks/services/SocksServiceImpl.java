@@ -80,17 +80,31 @@ public class SocksServiceImpl implements SocksService {
         return true;
     }
 
-    public Integer addSock(Integer i) {
+    private Integer addSock(Integer i) {
         for (Socks sock : socks) {
             sock.setQuantity(sock.getQuantity()+ i);
         }
         return i;
     }
 
+    private Integer deleteSock(Integer i) {
+        for (Socks sock : socks) {
+            if (i > sock.getQuantity()) {
+                i = sock.getQuantity();
+            }
+            sock.setQuantity(sock.getQuantity()- i);
+        }
+        return i;
+    }
+
     @Override
     public boolean deleteSocks(Socks sock) {
-        saveFile();
-        return socks.remove(sock);
+        if (socks.contains(sock)) {
+            deleteSock(sock.getQuantity());
+            saveFile();
+            return true;
+        }
+        return false;
     }
 
     public void saveFile() {
