@@ -50,7 +50,7 @@ public class SocksController {
     public ResponseEntity getAllSocks(@RequestParam Color color,
                                       @RequestParam Size size,
                                       @RequestParam CottonPart cottonPart) {
-        return ResponseEntity.ok(socksService.getSocks(color,size,cottonPart).toString());
+        return ResponseEntity.ok("Количество носков на складе - "+socksService.getSocks(color,size,cottonPart).toString());
     }
 
     @DeleteMapping("/delete")
