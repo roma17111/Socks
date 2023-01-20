@@ -18,4 +18,5 @@ public interface FileService {
 
     Path saveFileSocksOperation(String s);
 
+    File getDataFileOperation();
 }

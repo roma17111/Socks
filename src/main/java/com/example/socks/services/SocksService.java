@@ -27,7 +27,7 @@ public interface SocksService {
 
     Path createSocksTextFileAll() throws IOException;
 
-    Path createSocksJsonFileOperation(String operation, Color color,Size size, CottonPart cottonPart) throws IOException;
+    boolean createSocksJsonFileOperation(String operation, Color color,Size size, CottonPart cottonPart) throws IOException;
 
     void addSocksFromFile(InputStream inputStream) throws IOException;
 }

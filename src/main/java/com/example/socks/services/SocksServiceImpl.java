@@ -7,9 +7,11 @@ import com.example.socks.models.Socks;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.dynalink.Operation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.nio.file.Files;
@@ -45,7 +47,7 @@ public class SocksServiceImpl implements SocksService {
         if (!socks.contains(sock)) {
             socks.add(sock);
             createSocksJsonFileOperation("Приход носков " +
-                    sock.getQuantity(), sock.getColor(),sock.getSize(), sock.getCottonPart());
+                    sock.getQuantity(), sock.getColor(), sock.getSize(), sock.getCottonPart());
             saveFile();
             return sock;
         }
@@ -54,7 +56,7 @@ public class SocksServiceImpl implements SocksService {
             saveFile();
 
             createSocksJsonFileOperation("Приход носков " +
-                    sock.getQuantity(), sock.getColor(),sock.getSize(), sock.getCottonPart());
+                    sock.getQuantity(), sock.getColor(), sock.getSize(), sock.getCottonPart());
             return sock;
         }
         throw new RuntimeException();
@@ -66,7 +68,7 @@ public class SocksServiceImpl implements SocksService {
         Integer i = 0;
         for (Socks sock : socks) {
             if (color.equals(sock.getColor()) &&
-                    size.equals(sock.getSize())&&
+                    size.equals(sock.getSize()) &&
                     cottonPart.equals(sock.getCottonPart())) {
                 i = sock.getQuantity();
             }
@@ -77,19 +79,19 @@ public class SocksServiceImpl implements SocksService {
     @Override
     public boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i) throws IOException {
         for (Socks sock : socks) {
-            if (color.equals(sock.getColor())  &&
+            if (color.equals(sock.getColor()) &&
                     size.equals(sock.getSize()) &&
                     cottonPart.equals(sock.getCottonPart())) {
                 int a = sock.getQuantity();
-                if (i > a){
+                if (i > a) {
                     return false;
                 }
                 sock.setQuantity(sock.getQuantity() - i);
-                createSocksJsonFileOperation("Взято носков " + i,  sock.getColor(),sock.getSize(), sock.getCottonPart());
+                createSocksJsonFileOperation("Взято носков " + i, sock.getColor(), sock.getSize(), sock.getCottonPart());
                 if (sock.getQuantity() == 0) {
                     socks.remove(sock);
                     saveFile();
-                    createSocksJsonFileOperation("Взято носков " + i,sock.getColor(),sock.getSize(), sock.getCottonPart());
+                    createSocksJsonFileOperation("Взято носков " + i, sock.getColor(), sock.getSize(), sock.getCottonPart());
                     return true;
                 }
             }
@@ -104,7 +106,7 @@ public class SocksServiceImpl implements SocksService {
             if (i <= 0) {
                 i = Math.abs(i);
             }
-            sock.setQuantity(sock.getQuantity()+ i);
+            sock.setQuantity(sock.getQuantity() + i);
         }
         return i;
     }
@@ -117,7 +119,7 @@ public class SocksServiceImpl implements SocksService {
             if (i > sock.getQuantity()) {
                 i = sock.getQuantity();
             }
-            sock.setQuantity(sock.getQuantity()- i);
+            sock.setQuantity(sock.getQuantity() - i);
         }
         return i;
     }
@@ -134,7 +136,7 @@ public class SocksServiceImpl implements SocksService {
         if (sock.getQuantity() == 0) {
             socks.remove(sock);
             saveFile();
-            createSocksJsonFileOperation("Списано носков "+ sock.getQuantity() +"\n", sock.getColor(),sock.getSize(), sock.getCottonPart());
+            createSocksJsonFileOperation("Списано носков " + sock.getQuantity() + "\n", sock.getColor(), sock.getSize(), sock.getCottonPart());
             return true;
         }
         return false;
@@ -171,17 +173,16 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public Path createSocksJsonFileOperation(String operation, Color color,Size size, CottonPart cottonPart) throws IOException {
-        Path path = fileService.createTempFile("SocksFiles");
-        try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.WRITE)) {
-            writer.append(operation);
-            writer.append("\n" +
-                    "Цвет - " + color.toString() +" "+ color.getColor()+"\n" +
-                    "Размер - " + size.toString() +" "+size.getSize()+ "\n" +
-                    "Процент хлопка - " + cottonPart.toString() + " "+cottonPart.getPercent() + "%"+ "\n" )
-            ;
-        }
-        return path;
+    public boolean createSocksJsonFileOperation(String operation, Color color, Size size, CottonPart cottonPart) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("SockOperation.txt",true));
+        writer.append("\n");
+        writer.append(operation);
+        writer.append("\n" +
+                "Цвет - " + color.toString() + " " + color.getColor() + "\n" +
+                "Размер - " + size.toString() + " " + size.getSize() + "\n" +
+                "Процент хлопка - " + cottonPart.toString() + " " + cottonPart.getPercent() + "%" + "\n");
+        writer.close();
+        return true;
     }
 
 
@@ -191,7 +192,7 @@ public class SocksServiceImpl implements SocksService {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             String[] array = StringUtils.split(line, '|');
-           Socks socks1 = new Socks((Color.valueOf(array[0])), (Size.valueOf(array[1])), (CottonPart.valueOf(array[2]))
+            Socks socks1 = new Socks((Color.valueOf(array[0])), (Size.valueOf(array[1])), (CottonPart.valueOf(array[2]))
                     , Integer.valueOf(array[3]));
             addSocks(socks1);
         }

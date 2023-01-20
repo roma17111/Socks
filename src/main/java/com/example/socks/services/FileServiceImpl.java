@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -82,5 +80,8 @@ public class FileServiceImpl implements FileService {
         return null;
     }
 
-
+    @Override
+    public File getDataFileOperation() {
+        return new File(fileDataPathOperation + "/" + fileNameOperation);
+    }
 }
