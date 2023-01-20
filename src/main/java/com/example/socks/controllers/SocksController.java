@@ -8,8 +8,16 @@ import com.example.socks.services.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/socks")
@@ -78,5 +86,24 @@ public class SocksController {
                                     @RequestParam CottonPart cottonPart,
                                     @RequestParam Integer integer) {
         return ResponseEntity.ok(socksService.putSocks(color, size, cottonPart, integer));
+    }
+
+    @GetMapping("/download/all")
+    @Operation(description = "Загрузка всех носков")
+    @ApiResponse(responseCode = "200",
+            description = "Successfully")
+    public  ResponseEntity downloadAllRecipes() {
+        try {
+            Path path = socksService.createSocksTextFileAll();
+            InputStreamResource inputStream = new InputStreamResource(new FileInputStream(path.toFile()));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AllSocks.doc\"")
+                    .contentLength(Files.size(path))
+                    .body(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 }

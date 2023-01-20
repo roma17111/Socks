@@ -32,10 +32,12 @@ public class Socks {
 
     @Override
     public String toString() {
-        return "Партия :" + "\n" +
-                "Цвет - " + color + "\n" +
+        String s = "Носки :" + "\n" +
+                "Цвет - " + getColor() + "\n" +
                 "Размер - " + size + size.getSize() + "\n" +
                 "Процент хлопка - " + cottonPart.getPercent() + "\n" +
-                "Количество пар на складе - " + quantity + "\n";
+                "Количество пар на складе - " + getQuantity()+ "\n";
+
+        return s.toString();
     }
 }

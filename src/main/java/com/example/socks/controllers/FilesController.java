@@ -1,9 +1,11 @@
 package com.example.socks.controllers;
 
+import com.example.socks.models.Socks;
 import com.example.socks.services.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,7 +50,7 @@ public class FilesController {
     @Operation(description = "Загрузить носок на компьютер")
     @ApiResponse(responseCode = "200",
             description = "Загрузка прошла успешно")
-    public ResponseEntity<Void> uploadDataFile(@RequestParam MultipartFile file) throws IOException {
+    public ResponseEntity<Void> uploadDataFile(@NotNull @RequestParam MultipartFile file) throws IOException {
         fileService.cleanDataFileSocks();
         File file1 = fileService.getDataFile();
         try (FileOutputStream fileOutputStream = new FileOutputStream(file1)){

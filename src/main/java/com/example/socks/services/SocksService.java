@@ -7,6 +7,8 @@ import com.example.socks.models.Socks;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 
 @Service
@@ -21,4 +23,6 @@ public interface SocksService {
     boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i);
 
     boolean deleteSocks(Socks sock);
+
+    Path createSocksTextFileAll() throws IOException;
 }

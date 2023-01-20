@@ -10,6 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -135,5 +140,14 @@ public class SocksServiceImpl implements SocksService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Path createSocksTextFileAll() throws IOException {
+        Path path = fileService.createTempFile("SocksFiles");
+        try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+            writer.append(socks.toString());
+        }
+        return path;
     }
 }
