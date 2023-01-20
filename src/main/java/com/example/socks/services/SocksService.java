@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -25,4 +26,6 @@ public interface SocksService {
     boolean deleteSocks(Socks sock);
 
     Path createSocksTextFileAll() throws IOException;
+
+    void addSocksFromFile(InputStream inputStream) throws IOException;
 }

@@ -13,9 +13,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -58,7 +60,7 @@ public class SocksController {
     public ResponseEntity getAllSocks(@RequestParam Color color,
                                       @RequestParam Size size,
                                       @RequestParam CottonPart cottonPart) {
-        return ResponseEntity.ok("Количество носков на складе - "+socksService.getSocks(color,size,cottonPart).toString());
+        return ResponseEntity.ok("Количество носков на складе - " + socksService.getSocks(color, size, cottonPart).toString());
     }
 
     @DeleteMapping("/delete")
@@ -92,7 +94,7 @@ public class SocksController {
     @Operation(description = "Загрузка всех носков")
     @ApiResponse(responseCode = "200",
             description = "Successfully")
-    public  ResponseEntity downloadAllRecipes() {
+    public ResponseEntity downloadAllRecipes() {
         try {
             Path path = socksService.createSocksTextFileAll();
             InputStreamResource inputStream = new InputStreamResource(new FileInputStream(path.toFile()));
@@ -104,6 +106,17 @@ public class SocksController {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException();
+        }
+    }
+
+    @PostMapping(value = "/importspcks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> addSocksFromPcFile(@RequestParam MultipartFile multipartFile) {
+        try (InputStream inputStream = multipartFile.getInputStream()){
+            socksService.addSocksFromFile(inputStream);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+           e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
     }
 }

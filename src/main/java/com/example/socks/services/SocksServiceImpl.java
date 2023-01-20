@@ -7,11 +7,11 @@ import com.example.socks.models.Socks;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -149,5 +149,17 @@ public class SocksServiceImpl implements SocksService {
             writer.append(socks.toString());
         }
         return path;
+    }
+
+    @Override
+    public void addSocksFromFile(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] array = StringUtils.split(line, '|');
+           Socks socks1 = new Socks((Color.valueOf(array[0])), (Size.valueOf(array[1])), (CottonPart.valueOf(array[2]))
+                    , Integer.valueOf(array[3]));
+            addSocks(socks1);
+        }
     }
 }
