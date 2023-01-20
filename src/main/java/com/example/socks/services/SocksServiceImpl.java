@@ -163,7 +163,9 @@ public class SocksServiceImpl implements SocksService {
     public Path createSocksTextFileAll() throws IOException {
         Path path = fileService.createTempFile("SocksFiles");
         try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-            writer.append(socks.toString());
+            for (Socks sock : socks) {
+                writer.append(sock.toString());
+            }
         }
         return path;
     }
