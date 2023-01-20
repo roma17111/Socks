@@ -41,14 +41,25 @@ public class SocksServiceImpl implements SocksService {
 
     @Override
     @Nullable
-    public Socks addSocks(Socks sock) {
-        socks.add(sock);
+    public Socks addSocks(Socks sock) throws IOException {
+        if (!socks.contains(sock)) {
+            socks.add(sock);
+            createSocksJsonFileOperation("Приход носков " +
+                    sock.getQuantity(), sock.getColor(),sock.getSize(), sock.getCottonPart());
+            saveFile();
+            return sock;
+        }
         if (socks.contains(sock)) {
             addSock(sock.getQuantity());
+            saveFile();
+
+            createSocksJsonFileOperation("Приход носков " +
+                    sock.getQuantity(), sock.getColor(),sock.getSize(), sock.getCottonPart());
+            return sock;
         }
-        saveFile();
-        return sock;
+        throw new RuntimeException();
     }
+
 
     @Override
     public Integer getSocks(Color color, Size size, CottonPart cottonPart) {
@@ -64,7 +75,7 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i) {
+    public boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i) throws IOException {
         for (Socks sock : socks) {
             if (color.equals(sock.getColor())  &&
                     size.equals(sock.getSize()) &&
@@ -74,13 +85,16 @@ public class SocksServiceImpl implements SocksService {
                     return false;
                 }
                 sock.setQuantity(sock.getQuantity() - i);
+                createSocksJsonFileOperation("Взято носков " + i,  sock.getColor(),sock.getSize(), sock.getCottonPart());
                 if (sock.getQuantity() == 0) {
                     socks.remove(sock);
                     saveFile();
+                    createSocksJsonFileOperation("Взято носков " + i,sock.getColor(),sock.getSize(), sock.getCottonPart());
                     return true;
                 }
             }
         }
+
         saveFile();
         return true;
     }
@@ -109,15 +123,18 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public boolean deleteSocks(Socks sock) {
+    public boolean deleteSocks(Socks sock) throws IOException {
         if (socks.contains(sock)) {
             deleteSock(sock.getQuantity());
+            createSocksJsonFileOperation("Списано носков " + sock.getQuantity() + "\n",
+                    sock.getColor(), sock.getSize(), sock.getCottonPart());
             saveFile();
             return true;
         }
         if (sock.getQuantity() == 0) {
             socks.remove(sock);
             saveFile();
+            createSocksJsonFileOperation("Списано носков "+ sock.getQuantity() +"\n", sock.getColor(),sock.getSize(), sock.getCottonPart());
             return true;
         }
         return false;
@@ -152,6 +169,21 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
+    public Path createSocksJsonFileOperation(String operation, Color color,Size size, CottonPart cottonPart) throws IOException {
+        Path path = fileService.createTempFile("SocksFiles");
+        try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.WRITE)) {
+            writer.append(operation);
+            writer.append("\n" +
+                    "Цвет - " + color.toString() +" "+ color.getColor()+"\n" +
+                    "Размер - " + size.toString() +" "+size.getSize()+ "\n" +
+                    "Процент хлопка - " + cottonPart.toString() + " "+cottonPart.getPercent() + "%"+ "\n" )
+            ;
+        }
+        return path;
+    }
+
+
+    @Override
     public void addSocksFromFile(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
@@ -162,4 +194,5 @@ public class SocksServiceImpl implements SocksService {
             addSocks(socks1);
         }
     }
+
 }

@@ -40,7 +40,7 @@ public class SocksController {
             description = "параметры запроса отсутствуют или имеют некорректный формат;")
     @ApiResponse(responseCode = "500",
             description = "произошла ошибка, не зависящая от вызывающей стороны.")
-    public ResponseEntity addSocks(@RequestBody Socks sock) {
+    public ResponseEntity addSocks(@RequestBody Socks sock) throws IOException {
         try {
             return ResponseEntity.ok(socksService.addSocks(sock));
         } catch (IllegalArgumentException e) {
@@ -72,7 +72,11 @@ public class SocksController {
     @ApiResponse(responseCode = "500",
             description = "произошла ошибка, не зависящая от вызывающей стороны.")
     public ResponseEntity delete(@RequestBody Socks sock) {
-        return ResponseEntity.ok(socksService.deleteSocks(sock));
+        try {
+            return ResponseEntity.ok(socksService.deleteSocks(sock));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("/take")
@@ -87,7 +91,11 @@ public class SocksController {
                                     @RequestParam Size size,
                                     @RequestParam CottonPart cottonPart,
                                     @RequestParam Integer integer) {
-        return ResponseEntity.ok(socksService.putSocks(color, size, cottonPart, integer));
+        try {
+            return ResponseEntity.ok(socksService.putSocks(color, size, cottonPart, integer));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/download/all")

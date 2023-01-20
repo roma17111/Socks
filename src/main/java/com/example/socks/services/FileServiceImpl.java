@@ -7,14 +7,22 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 @Service
-public class FileServiceImpl implements FileService{
+public class FileServiceImpl implements FileService {
     @Value("${name.of.data.file}")
     private String fileName;
 
     @Value("${path.to.data.file}")
     private String fileDataPath;
+
+    @Value("name.of.data.fileOperations")
+    private String fileNameOperation;
+
+    @Value("path.to.data.fileOperations")
+    private String fileDataPathOperation;
 
     @Override
     public boolean saveFileSocks(String json) {
@@ -63,5 +71,16 @@ public class FileServiceImpl implements FileService{
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Path saveFileSocksOperation(String s) {
+        try {
+            return Files.createTempFile(Path.of(fileDataPath), "tenpfile", s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

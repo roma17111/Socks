@@ -14,4 +14,8 @@ public interface FileService {
     File getDataFile();
 
     Path createTempFile(String suffix);
+
+
+    Path saveFileSocksOperation(String s);
+
 }

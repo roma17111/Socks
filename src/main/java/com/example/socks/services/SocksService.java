@@ -16,16 +16,18 @@ import java.util.Map;
 public interface SocksService {
 
     @Nullable
-    Socks addSocks(Socks sock);
+    Socks addSocks(Socks sock) throws IOException;
 
     Integer getSocks(Color color, Size size, CottonPart cottonPart);
 
 
-    boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i);
+    boolean putSocks(Color color, Size size, CottonPart cottonPart, Integer i) throws IOException;
 
-    boolean deleteSocks(Socks sock);
+    boolean deleteSocks(Socks sock) throws IOException;
 
     Path createSocksTextFileAll() throws IOException;
+
+    Path createSocksJsonFileOperation(String operation, Color color,Size size, CottonPart cottonPart) throws IOException;
 
     void addSocksFromFile(InputStream inputStream) throws IOException;
 }
