@@ -3,6 +3,7 @@ package com.example.socks.services;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -46,6 +47,20 @@ public class FileServiceImpl implements FileService{
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public File getDataFile() {
+        return new File(fileDataPath + "/" + fileName);
+    }
+
+    @Override
+    public Path createTempFile(String suffix) {
+        try {
+            return Files.createTempFile(Path.of(fileDataPath), "tenpfile", suffix);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
