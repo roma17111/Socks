@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/files/recipe")
@@ -62,4 +64,23 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+
+    @GetMapping("/download/operations")
+    @Operation(description = "Загрузка всех операций")
+    @ApiResponse(responseCode = "200",
+            description = "Successfully")
+    public ResponseEntity downloadAllRecipesOperations() {
+        try {
+            Path path = fileService.getDataFileOperation().toPath();
+                    InputStreamResource inputStream = new InputStreamResource(new FileInputStream(path.toFile()));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"SockOperation.txt\"")
+                    .contentLength(Files.size(path))
+                    .body(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
 }

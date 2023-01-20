@@ -82,6 +82,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public File getDataFileOperation() {
-        return new File(fileDataPathOperation + "/" + fileNameOperation);
+        return new File("SockOperation.txt");
     }
 }

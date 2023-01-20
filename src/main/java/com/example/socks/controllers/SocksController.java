@@ -8,6 +8,7 @@ import com.example.socks.services.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,8 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.net.URI;
+import java.nio.file.*;
 
 @RestController
 @RequestMapping("/api/socks")
@@ -127,4 +128,5 @@ public class SocksController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
 }
