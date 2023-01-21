@@ -7,19 +7,16 @@ import com.example.socks.models.Socks;
 import com.example.socks.services.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.jetbrains.annotations.NotNull;
+import io.swagger.v3.oas.annotations.tags.Tag;;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.nio.file.*;
 
 @RestController
@@ -34,7 +31,8 @@ public class SocksController {
     }
 
     @PostMapping("/add")
-    @Operation(description = "Добавить партию на склад")
+    @Operation(summary = "Добваление партии носков",
+            description = "Добавить партию на склад")
     @ApiResponse(responseCode = "200",
             description = "удалось добавить приход")
     @ApiResponse(responseCode = "400",
@@ -51,7 +49,8 @@ public class SocksController {
     }
 
     @GetMapping("/get")
-    @Operation(description = "Посмотреть на складе количество партий носков")
+    @Operation(summary = "Посмотреть носки на складе",
+            description = "Посмотреть на складе количество партий носков")
     @ApiResponse(responseCode = "200",
             description = "Список партий носков на складе")
     @ApiResponse(responseCode = "400",
@@ -65,7 +64,8 @@ public class SocksController {
     }
 
     @DeleteMapping("/delete")
-    @Operation(description = "Выбраковка товара")
+    @Operation(summary = "ВЫБРАКОВКА",
+            description = "Выбраковка товара")
     @ApiResponse(responseCode = "200",
             description = "Товары списаны")
     @ApiResponse(responseCode = "400",
@@ -81,7 +81,8 @@ public class SocksController {
     }
 
     @PutMapping("/take")
-    @Operation(description = "Забрать носки со склада")
+    @Operation(summary = "Взять носки",
+            description = "Забрать носки со склада")
     @ApiResponse(responseCode = "200",
             description = "Вы забрали носки")
     @ApiResponse(responseCode = "400",
@@ -100,7 +101,8 @@ public class SocksController {
     }
 
     @GetMapping("/download/all")
-    @Operation(description = "Загрузка всех носков")
+    @Operation(summary = "DOWNLOAD TXT",
+            description = "DOWNLOAD TXT")
     @ApiResponse(responseCode = "200",
             description = "Successfully")
     public ResponseEntity downloadAllSocks() {
@@ -118,7 +120,11 @@ public class SocksController {
         }
     }
 
-    @PostMapping(value = "/importspcks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/importsocks", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Add Socks TXT",
+            description = "Add socks From TXTFile")
+    @ApiResponse(responseCode = "200",
+            description = "Successfully")
     public ResponseEntity<Object> addSocksFromPcFile(@RequestParam MultipartFile multipartFile) {
         try (InputStream inputStream = multipartFile.getInputStream()){
             socksService.addSocksFromFile(inputStream);

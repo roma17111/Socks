@@ -29,7 +29,8 @@ public class FilesController {
     }
 
     @GetMapping(value = "/export", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(description = "Загрузить носок с компьютера")
+    @Operation(
+            summary = "Загрузка Json На ПК",description = "Загрузить носок на компьютер")
     @ApiResponse(responseCode = "200",
             description = "Загрузка прошла успешно")
     public ResponseEntity<InputStreamResource> downloadFile() throws FileNotFoundException {
@@ -49,7 +50,8 @@ public class FilesController {
 
     @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 
-    @Operation(description = "Загрузить носок на компьютер")
+    @Operation(summary = "Загрузка носков",
+            description = "Загрузить носок с компьютера")
     @ApiResponse(responseCode = "200",
             description = "Загрузка прошла успешно")
     public ResponseEntity<Void> uploadDataFile(@NotNull @RequestParam MultipartFile file) throws IOException {
@@ -65,7 +67,8 @@ public class FilesController {
     }
 
     @GetMapping("/download/operations")
-    @Operation(description = "Загрузка всех операций")
+    @Operation(summary = "Загрузить отчёт об операциях",
+            description= "Загрузка всех операций")
     @ApiResponse(responseCode = "200",
             description = "Successfully")
     public ResponseEntity downloadAllRecipesOperations() {
