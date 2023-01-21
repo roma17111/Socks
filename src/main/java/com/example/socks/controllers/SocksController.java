@@ -103,7 +103,7 @@ public class SocksController {
     @Operation(description = "Загрузка всех носков")
     @ApiResponse(responseCode = "200",
             description = "Successfully")
-    public ResponseEntity downloadAllRecipes() {
+    public ResponseEntity downloadAllSocks() {
         try {
             Path path = socksService.createSocksTextFileAll();
             InputStreamResource inputStream = new InputStreamResource(new FileInputStream(path.toFile()));

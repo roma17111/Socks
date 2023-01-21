@@ -174,7 +174,8 @@ public class SocksServiceImpl implements SocksService {
 
     @Override
     public boolean createSocksJsonFileOperation(String operation, Color color, Size size, CottonPart cottonPart) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("SockOperation.txt",true));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("SockOperation.txt"
+                ,true));
         writer.append("\n");
         writer.append(operation);
         writer.append("\n" +
@@ -185,7 +186,6 @@ public class SocksServiceImpl implements SocksService {
         return true;
     }
 
-
     @Override
     public void addSocksFromFile(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -193,9 +193,8 @@ public class SocksServiceImpl implements SocksService {
         while ((line = bufferedReader.readLine()) != null) {
             String[] array = StringUtils.split(line, '|');
             Socks socks1 = new Socks((Color.valueOf(array[0])), (Size.valueOf(array[1])), (CottonPart.valueOf(array[2]))
-                    , Integer.valueOf(array[3]));
+                    ,Integer.valueOf(array[3]));
             addSocks(socks1);
         }
     }
-
 }

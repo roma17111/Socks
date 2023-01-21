@@ -64,7 +64,6 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-
     @GetMapping("/download/operations")
     @Operation(description = "Загрузка всех операций")
     @ApiResponse(responseCode = "200",

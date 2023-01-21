@@ -16,11 +16,6 @@ public class FileServiceImpl implements FileService {
     @Value("${path.to.data.file}")
     private String fileDataPath;
 
-    @Value("name.of.data.fileOperations")
-    private String fileNameOperation;
-
-    @Value("path.to.data.fileOperations")
-    private String fileDataPathOperation;
 
     @Override
     public boolean saveFileSocks(String json) {
